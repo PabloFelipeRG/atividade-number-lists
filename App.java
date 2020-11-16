@@ -6,7 +6,7 @@ public class App {
     private static final ExecutorService executor = Executors.newWorkStealingPool(5);
     private static final Random random = new Random();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         var futures = new HashSet<Future<List<Integer>>>();
         futures.add(generateRandomNumbersList());
         futures.add(generateRandomNumbersList());
@@ -14,7 +14,7 @@ public class App {
         futures.add(generateRandomNumbersList());
         futures.add(generateRandomNumbersList());
 
-        var list = futures.stream()
+        var list = futures.parallelStream()
             .map(future -> {
                 try {
                     return future.get();
